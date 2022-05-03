@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  php-app1:
+    build:
+      context: ./backend
+      dockerfile: DockerfileDev
+    restart: unless-stopped
+    networks:
+      - default
+
+  nginx-app1:
+    build:
+      context: ./docker/nginx
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - php-app1
+    expose:
+      - "80"
+    networks:
+      - default
